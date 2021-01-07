@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--声明Mapper的命名空间: 和接口呼应,区分不同的mapper-->
+<mapper namespace="com.cdcas.coupon.mapper.ManagerMapper">
+
+    <resultMap id="managerMap" type="Manager">
+        <id column="mgr_id"  property="id" javaType="java.lang.Integer"/>
+        <result column="mgr_name" property="name" javaType="java.lang.String"/>
+        <result column="mgr_pwd" property="pwd" javaType="java.lang.String"/>
+        <result column="mgr_phone" property="phone" javaType="java.lang.String"/>
+        <result column="mgr_regTime" property="regTime" javaType="java.util.Date"/>
+        <result column="mgr_inUse" property="inUse" javaType="java.lang.Boolean"/>
+    </resultMap>
+
+    <select id="login" parameterType="string" resultMap="managerMap">
+        SELECT * FROM tb_manager WHERE mgr_phone =#{param1}
+    </select>
+
+    <select id="getList" parameterType="object" resultMap="managerMap">
+        SELECT mgr_id, mgr_name, mgr_pwd, mgr_phone, mgr_regTime, mgr_inUse
+        FROM tb_manager
+        WHERE mgr_name LIKE CONCAT('%', #{param2}, '%')
+           OR mgr_phone LIKE CONCAT('%', #{param2}, '%')
+        LIMIT #{param1},10
+    </select>
+
+    <select id="getCount" parameterType="object" resultType="int">
+        SELECT COUNT(*)
+        FROM tb_manager
+        WHERE mgr_name LIKE CONCAT('%', #{param1}, '%')
+           OR mgr_phone LIKE CONCAT('%', #{param1}, '%')
+    </select>
+
+    <insert id="insert" parameterType="Manager">
+        INSERT INTO tb_manager VALUES(NULL,#{name},NULL,#{phone},#{regTime},1)
+    </insert>
+
+    <delete id="delete" parameterType="Manager">
+        DELETE
+        FROM tb_manager
+        WHERE mgr_phone = #{phone}
+    </delete>
+
+    <update id="update" parameterType="Manager">
+        UPDATE tb_manager
+        SET mgr_inUse = #{inUse}
+        WHERE mgr_phone=#{phone}
+    </update>
+</mapper>

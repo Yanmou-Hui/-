@@ -1,0 +1,31 @@
+html,body{
+    height: 100%;
+}
+body{
+    background: linear-gradient(to top, #d5dee7 0%, #ffafbd 0%, #c9ffbf 100%);
+}
+.loginBox{
+    width: 460px;
+    height: 320px;
+    background: rgba(0,0,0,0.2);
+    position: absolute;
+    left:50% ;
+    top:50%;
+    margin-left: -230px;
+    margin-top: -170px;
+    border-radius: 14px;
+    padding-top: 20px;
+}
+.loginBox input{
+    width: 80%;
+    margin: 10%;
+    background: transparent;
+}
+.loginBox input::placeholder{
+    color: #fff;
+}
+.loginBox button{
+    width: 370px;
+    margin-left: calc(50% - 185px);
+    background: rgba(255,255,255,0.6);
+}

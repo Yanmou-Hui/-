@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--加载配置文件 : driver/url/username/password-->
+    <!--<properties resource="properties/db.properties" />-->
+
+    <settings>
+        <!--当返回行的所有列都是空时，MyBatis默认返回null-->
+        <setting name="returnInstanceForEmptyRow" value="true"/>
+        <!--显示sql语句, 方便控制台调试时,显示SQL的执行情况-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--设置别名
+        mybatis需要声明类型的时候完全的限定名: com.cdcas.coupon.pojo.User
+        配置了别名, 就可以简化为User
+    -->
+    <typeAliases>
+        <package name="com.cdcas.coupon.pojo" />
+    </typeAliases>
+
+    <!--环境配置-->
+   <!-- <environments default="development">
+        <environment id="development">
+            &lt;!&ndash;使用了 JDBC 的提交和回滚设置，它依赖于从数据源得到的连接来管理事务作用域&ndash;&gt;
+            <transactionManager type="JDBC"/>
+            &lt;!&ndash; mybatis提供了3种数据源类型，分别是：POOLED,UNPOOLED,JNDI &ndash;&gt;
+            &lt;!&ndash; POOLED 表示支持JDBC数据源连接池 &ndash;&gt;
+            &lt;!&ndash; UNPOOLED 表示不支持数据源连接池 &ndash;&gt;
+            &lt;!&ndash; JNDI 表示支持外部数据源连接池 &ndash;&gt;
+            &lt;!&ndash;${propertyName}&ndash;&gt;
+            <dataSource type="POOLED">
+                <property name="driver" value="${druid.driver}"/>
+                <property name="url" value="${druid.url}"/>
+                <property name="username" value="${druid.username}"/>
+                <property name="password" value="${druid.password}"/>
+            </dataSource>
+        </environment>
+    </environments>-->
+
+    <!--在程序中扫描Mapper接口的所在位置,
+        Mapper接口就不需实例化, MyBatis会自动找到并创建实例
+    -->
+<!--
+    <mappers>
+        <package name="com.cdcas.coupon.mapper"/>
+    </mappers>
+-->
+
+</configuration>

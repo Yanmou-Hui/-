@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <!--指定springMVC的核心类：DispatcherServlet-->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <!--指定初始化的参数内容，ContextConfigLocation。读取Spring的配置文件-->
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:config/spring/spring.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <!--表示所有的请求都先通过springMVC拦截，并提供具体的访问方式-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>

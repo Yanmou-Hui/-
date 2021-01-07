@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--声明Mapper的命名空间: 和接口呼应,区分不同的mapper-->
+<mapper namespace="com.cdcas.coupon.mapper.AdminMapper">
+    <resultMap id="adminMap" type="Admin">
+        <id column="admin_id" property="id" javaType="java.lang.Integer"/>
+        <result column="admin_name" property="name" javaType="java.lang.String"/>
+        <result column="admin_pwd" property="pwd" javaType="java.lang.String"/>
+        <result column="admin_phone" property="phone" javaType="java.lang.String"/>
+        <result column="admin_regTime" property="regTime" javaType="java.util.Date"/>
+    </resultMap>
+
+    <select id="login" parameterType="string" resultMap="adminMap">
+        SELECT * FROM tb_admin WHERE admin_phone=#{param1}  AND admin_pwd=#{param2}
+    </select>
+</mapper>

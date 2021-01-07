@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--声明Mapper的命名空间: 和接口呼应,区分不同的mapper-->
+<mapper namespace="com.cdcas.coupon.mapper.UserMapper">
+
+    <!--User selectByPhone(String phone);
+     java.lang.String : string   mybatis提供的别名方式
+     通过别名的配置, 返回类型可以简化为User
+     在select标签内完成相关select语句
+     * 不建议使用,性能不如具体的字段名
+     #{参数} , 如果是非对象参数:#{param1} #{param2} ... / #{arg0} #{arg1}
+                如果是对象类型, #{字段名} #{phone}
+    -->
+
+    <!--给数据库中的字段和User类中的字段进行映射配置即可-->
+    <resultMap id="userMap" type="User">
+        <id column="user_id" property="id" javaType="java.lang.Integer" />
+        <result column="user_name" property="name" javaType="java.lang.String" />
+        <result column="user_phone" property="phone" javaType="java.lang.String" />
+        <result column="user_birth" property="birth" javaType="java.util.Date" />
+        <result column="user_regTime" property="regTime" javaType="java.util.Date" />
+    </resultMap>
+
+    <select id="selectByPhone" parameterType="string" resultMap="userMap">
+        SELECT user_id,user_name,user_phone,user_birth,user_regTime
+        FROM tb_user WHERE user_phone=#{param1}
+    </select>
+
+    <delete id="delete" parameterType="string">
+        DELETE FROM tb_user WHERE user_phone = #{param1}
+    </delete>
+
+    <insert id="insert" parameterType="com.cdcas.coupon.mapper.UserMapper">
+            INSERT INTO tb_user(user_name,user_phone,user_birth,user_regTime) VALUES(#{name},#{phone},NULL ,#{regTime});
+    </insert>
+
+    <update id="update" parameterType="com.cdcas.coupon.pojo.User">
+        UPDATE tb_user SET user_name=#{name},user_birth=#{birth},user_regTime=#{regTime} WHERE user_phone=#{phone}
+    </update>
+
+    <select id="selectAll" resultMap="userMap" parameterType="object">
+        SELECT * FROM tb_user
+        WHERE user_name like CONCAT('%',#{param2},'%')
+           OR user_phone like CONCAT('%',#{param2},'%')
+        ORDER BY user_regTime DESC
+        LIMIT #{param1,javaType=int,jdbcType=NUMERIC},10
+    </select>
+
+    <select id="selectAllNoArgs" resultMap="userMap">
+        SELECT * FROM tb_user
+    </select>
+
+    <select id="getCount" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM tb_user
+        WHERE user_name like CONCAT('%',#{param1},'%')
+           OR user_phone like CONCAT('%',#{param1},'%')
+    </select>
+
+    <resultMap id="getCpnUsedListMap" type="UserCouponVo">
+        <result column="cp_id" property="id" javaType="java.lang.Integer"/>
+        <result column="user_name" property="userName" javaType="java.lang.String"/>
+        <result column="user_phone" property="phone" javaType="java.lang.String"/>
+        <result column="cp_name" property="cpName" javaType="java.lang.String"/>
+        <result column="get_use_time" property="useTime" javaType="java.util.Date"/>
+        <result column="get_idUsed" property="idUsed" javaType="java.lang.Boolean"/>
+        <result column="cp_role" property="role" javaType="java.lang.String"/>
+        <result column="cp_img" property="img" javaType="java.lang.String"/>
+        <result column="cp_collectExpire" property="collectExpire" javaType="java.util.Date"/>
+        <result column="cp_useExpire" property="useExpire" javaType="java.util.Date"/>
+        <result column="cp_inUse" property="inUse" javaType="java.lang.Boolean"/>
+    </resultMap>
+
+
+    <select id="getCpnUsedList" parameterType="object" resultMap="getCpnUsedListMap">
+        SELECT cp_id,user_name,user_phone,cp_name,get_use_time,cp_role,cp_img
+        from tb_get
+        LEFT JOIN tb_coupon ON tb_get.get_cp_id=tb_coupon.cp_id
+        LEFT JOIN tb_user ON tb_get.get_user_phone=tb_user.user_phone
+        WHERE get_idUsed=1
+        <if test="param2 !=null">
+            AND (get_use_time between #{param2} AND #{param3})
+        </if>
+        <if test="param1 !=null">
+            LIMIT #{param1},10
+        </if>
+    </select>
+
+    <select id="getCpnUsedListCount" parameterType="object" resultType="int">
+        SELECT COUNT(*)
+        from tb_get
+        LEFT JOIN tb_coupon ON tb_get.get_cp_id=tb_coupon.cp_id
+        LEFT JOIN tb_user ON tb_get.get_user_phone=tb_user.user_phone
+        WHERE get_idUsed=1
+        <if test="param1 !=null">
+            AND (get_use_time between #{param1} AND #{param2})
+        </if>
+    </select>
+
+    <select id="selectCpnList" resultMap="getCpnUsedListMap" parameterType="object">
+        SELECT  cp_id,user_phone,cp_name,cp_collectExpire,cp_useExpire,get_idUsed,cp_img
+        FROM tb_get
+                 LEFT JOIN tb_user ON tb_user.user_phone=tb_get.get_user_phone
+                 LEFT JOIN tb_coupon ON tb_get.get_cp_id=tb_coupon.cp_id
+        WHERE  user_phone like CONCAT('%',#{param2},'%')
+        ORDER BY user_regTime DESC,get_idUsed ASC
+        <if test="param1 !=null">
+            LIMIT #{param1,javaType=int,jdbcType=NUMERIC},10
+        </if>
+    </select>
+
+    <select id="selectCpnListCount" parameterType="object" resultType="int">
+        SELECT COUNT(*)
+        FROM tb_get
+                 LEFT JOIN tb_user ON tb_user.user_phone=tb_get.get_user_phone
+                 LEFT JOIN tb_coupon ON tb_get.get_cp_id=tb_coupon.cp_id
+        WHERE  user_phone like CONCAT('%',#{param1},'%')
+    </select>
+
+    <update id="updateUsed" parameterType="Get">
+        UPDATE tb_get
+        SET get_idUsed   = #{idUsed},
+            get_use_time = #{useTime}
+        WHERE get_cp_id = #{cpId}
+          AND get_user_phone = #{phone}
+    </update>
+</mapper>

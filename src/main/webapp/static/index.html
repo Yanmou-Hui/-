@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>华联后台管理登录</title>
+    <link rel="stylesheet" href="utils/layui/css/layui.css">
+    <!--  <link rel="stylesheet" href="style/login.css"> -->
+    <style type="text/css">
+        html, body {
+            position: relative;
+            height: 100%;
+            background: #45177d;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            text-align: center;
+            margin-top: 1rem;
+            width: 100%;
+            height: 1rem;
+            color: #dd047e;
+        }
+
+        .loginBox {
+            position: relative;
+            width: 460px;
+            height: 320px;
+            background: rgba(0, 0, 0, 0.2);
+            overflow: visible;
+            left: 40%;
+            top: 30%;
+            border-radius: 14px;
+            padding-top: 10px;
+        }
+
+        .loginBox img {
+            width: 35%;
+            height: 90%;
+            position: absolute;
+            left: -206px;
+
+        }
+
+        .loginBox input {
+            width: 80%;
+            margin: 10%;
+            background: transparent;
+            border: 2px solid #dd047e;
+            color: white;
+            border-radius: 4px;
+
+        }
+
+        .loginBox input::placeholder {
+            color: #fff;
+        }
+
+        .loginBox .loginBtn {
+            width: 370px;
+            margin-left: calc(50% - 185px);
+            border: 2px solid #dd047e;
+            background-color: #45177d;
+            border-radius: 4px;
+            color: #dd047e;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div class="loginBox">
+    <img class="logo" src="images/logo.png" alt="">
+    <h2>华联管理员登录</h2>
+    <form class="layui-form">
+        <div class="layui-form-item layui-form-text">
+            <input type="text" placeholder="手机号" class="layui-input inpTel" required lay-verify="phone">
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <input type="password" placeholder="密码" class="layui-input inpPass" required lay-verify="pass">
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <button type="submit" class="layui-btn loginBtn" lay-submit="" lay-filter="demo1">登录</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+<script src="utils/jquery-3.4.1.min.js"></script>
+<script src="utils/layui/layui.js"></script>
+<script src="utils/baseUrl.js"></script>
+<script src="utils/md5.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form;
+        form.verify({
+            pass: [
+                /^[0-9]{6}$/
+                , '账号或密码错误！'
+            ]
+        });
+
+        form.on('submit(demo1)', function (data) {
+
+            $.ajax({
+                method: 'post',
+                url: baseUrl + '/admin/login',
+                data: {
+                    phone: $('.inpTel').val(),
+                    pwd: $.md5($('.inpPass').val()).toUpperCase()
+                },
+                success: function (res) {
+                    if (res.code == 1) {
+                        console.log(res);
+                        res = res.data;
+                        window.localStorage.setItem('auth', res.auth);
+                        window.localStorage.setItem('user', res.name);
+                        window.location.href = './pages/home.html';
+                    } else {
+                        layer.msg('账号或密码错误');
+                        $('.inpTel').val('');
+                        $('.inpPass').val('');
+                        return false;
+                    }
+                }
+            });
+            return false
+        });
+    })
+
+
+</script>

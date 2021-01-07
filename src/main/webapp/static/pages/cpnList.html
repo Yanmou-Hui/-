@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>华联</title>
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name=viewport
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 20px;
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            background: #45177d;
+        }
+
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            width: 100%;
+            height: 3rem;
+            color: #dd047e;
+            margin-bottom: 2rem;
+        }
+
+        h2 span {
+            font-size: 2rem;
+            color: #eee;
+        }
+
+        .btn {
+            width: 100%;
+            height: 4rem;
+            margin-top: 2rem;
+            outline: none;
+            border: 1px solid #eee;
+            box-shadow: 0 0 1px 1px #999;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        #cpnBox {
+            width: 100%;
+            height: calc(100% - 3rem);
+            padding: 0 2rem;
+            overflow: scroll;
+        }
+
+        .list {
+            width: 28rem;
+            margin-bottom: 1.6rem;
+            height: 8rem;
+            position: relative;
+        }
+
+        .bg {
+            width: 100%;
+            height: 8rem;
+        }
+
+        .tit {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: rgba(255, 255, 255, 0.2);
+            width: 100%;
+            height: 8rem;
+
+        }
+
+        .tit img {
+            width: 8rem;
+            height: 8rem;
+        }
+
+        #box {
+            width: 32rem;
+            height: 100%;
+            position: fixed;
+            background: rgba(0, 0, 0, 0.4);
+            left: 0;
+            top: 0;
+            display: none;
+        }
+
+        .con {
+            width: 32rem;
+            height: 32rem;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            margin-top: -16rem;
+            background: #fff;
+            padding: 4rem;
+            box-sizing: border-box;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: #45177d;
+        }
+
+        h3 span {
+            font-size: 2rem;
+            color: #dd047e;
+        }
+
+        .con p {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #45177d;
+        }
+
+        .con p:nth-child(2) {
+            font-weight: bold;
+        }
+
+        .con p span {
+            color: #dd047e;
+            padding-left: 3rem;
+        }
+
+        .ok {
+            width: 10rem;
+            height: 4rem;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid #45177d;
+            color: #45177d;
+            box-shadow: 0 0 1px 1px #eee;
+            outline: none;
+            margin-top: 4rem;
+            font-size: 1.3rem;
+            background-color: #dd047e;
+            color: white;
+        }
+
+        .no {
+            width: 10rem;
+            height: 4rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 0;
+            box-shadow: 0 0 1px 1px #eee;
+            outline: none;
+            margin-left: 3rem;
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .layui {
+            width: 16rem;
+            height: 8rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-size: 1.6rem;
+            text-align: center;
+            line-height: 8rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -8rem;
+            margin-top: -4rem;
+            display: none;
+        }
+    </style>
+    <script>
+        function fn() {
+            document.documentElement.style.fontSize = document.documentElement.clientWidth * 20 / 640 + 'px';
+        }
+
+        document.addEventListener('DOMContextLoaded', fn, false)
+        window.addEventListener('resize', fn);
+        window.addEventListener('orientationchange', fn);
+        window.addEventListener('load', fn);
+
+    </script>
+</head>
+<body>
+<h2>优惠券核销 <span></span></h2>
+<div id="cpnBox">
+    <!--<div class="list">
+        <img class="bg" src="../images/imgbg.png" alt="">
+        <div class="tit">
+            <img src="../images/shixiao.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <img class="bg" src="../images/imgbg.png" alt="">
+        <div class="tit">
+            <img src="../images/hexiao.png" alt="">
+        </div>
+    </div>
+    <div class="list">
+        <img class="bg" src="../images/imgbg.png" alt="">
+        &lt;!&ndash;<div class="tit">
+            <img src="images/.png" alt="">
+        </div>&ndash;&gt;
+    </div>-->
+</div>
+<!--<button class="btn">核销</button>-->
+
+<div id="box">
+    <div class="con" data-id="">
+        <h3>核销确认 <span class="layPhone"></span></h3>
+        <p>优惠券信息</p>
+        <p>优惠券名称: <span class="name">满300减50</span></p>
+        <p>领取有效期: <span class="time1">2020-11-11</span></p>
+        <p>使用有效期: <span class="time2">2020-11-11</span></p>
+        <div>
+            <button class="ok">核销</button>
+            <button class="no">取消</button>
+        </div>
+    </div>
+</div>
+
+<div id="no" class="layui">
+    核销失败！
+</div>
+<div id="yes" class="layui">
+    核销成功！
+</div>
+</body>
+</html>
+<script src="../utils/zepto.min.js"></script>
+<script src="../utils/baseUrl.js"></script>
+<script>
+    var phone = window.location.search.substring(1).split('=')[1]
+    $('h2 span').html(phone);
+
+    function get() {
+        $.ajax({
+            url: baseUrl + '/user/getCpnList?phone=' + phone,
+            type: 'post',
+            success: function (res) {
+                $('#cpnBox').html('');
+                for (var i = 0; i < res.data.length; i++) {
+                    // 已失效
+                    if (new Date(res.data[i].useExpire.split(" ")).getTime() - new Date(res.data[i].collectExpire.split(" ")).getTime() < 0) {
+                        $('#cpnBox').append(`<div data-id="${res.data[i].id}"
+                                                  data-desc="${res.data[i].desc}"
+                                                  data-collectExpire="${res.data[i].collectExpire}"
+                                                  data-useExpire="${res.data[i].useExpire}"
+                                                  data-name="${res.data[i].cpName}"
+                                                  class="list">
+                    <img class="bg" src="${baseUrl + '/static/images/' + res.data[i].img}" alt="">
+                    <div class="tit"><img src="../images/shixiao.png" alt=""></div></div>`);
+                    } else if (res.data[i].idUsed) { //已核销
+                        $('#cpnBox').append(`<div data-id="${res.data[i].id}"
+                                                    data-desc="${res.data[i].desc}"
+                                                    data-collectExpire="${res.data[i].collectExpire}"
+                                                    data-useExpire="${res.data[i].useExpire}"
+                                                     data-name="${res.data[i].cpName}"
+                                                      class="list">
+                    <img class="bg" src="${baseUrl + '/static/images/' + res.data[i].img}" alt="">
+                    <div class="tit"><img src="../images/hexiao.png" alt=""></div>
+                </div>`);
+                    } else {
+                        $('#cpnBox').append(`<div data-id="${res.data[i].id}"
+                                                    data-desc="${res.data[i].desc}"
+                                                    data-collectExpire="${res.data[i].collectExpire}"
+                                                    data-useExpire="${res.data[i].useExpire}"
+                                                    data-name="${res.data[i].cpName}"
+                                                    class="list list1">
+                    <img class="bg" src="${baseUrl + '/static/images/' + res.data[i].img}" alt="">`);
+                    }
+
+                }
+            }
+        })
+    }
+
+    get();
+
+    $('.no').click(function () {
+        $('#box').css('display', 'none');
+    });
+
+    $('#cpnBox').on('click', '.list1', function (ev) {
+        console.log(ev.currentTarget)
+        $('#box').css('display', 'block');
+
+        $('.con').attr('data-id', $(ev.currentTarget).attr('data-id'))
+
+        $('.layPhone').text(phone);
+        $('.name').text($(ev.currentTarget).attr('data-name'))
+        $('.time1').text($(ev.currentTarget).attr('data-collectExpire'))
+        $('.time2').text($(ev.currentTarget).attr('data-useExpire'))
+    });
+
+    $('.ok').click(function () {
+
+        $.ajax({
+            url: baseUrl + '/user/useCpn?phone=' + phone + '&cpId=' + $('.con').attr('data-id'),
+            type: 'post',
+            success: function (res) {
+                if (res.code == 1) {
+                    $('#yes').css('display', 'block');
+
+                    setTimeout(function () {
+                        $('#yes').css('display', 'none');
+                        $('#box').css('display', 'none');
+                        get();
+                    }, 1500)
+                }
+            }
+        })
+    })
+
+</script>
+
+
+
+
+

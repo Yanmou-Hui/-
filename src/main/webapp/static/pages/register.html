@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>华联</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            font-size: 20px;
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            background: #45177d;
+            color: #fff;
+            font-size: 1rem;
+            padding: 2rem;
+        }
+        h2{
+            font-size: 2rem;
+            text-align: center;
+            margin: 2rem auto;
+            color: #dd047e;
+        }
+        p{
+            margin-bottom: 1rem;
+        }
+        .name,.date,.phone,.pw1,.pw2{
+            width: 100%;
+            height: 4rem;
+            margin-bottom: 2rem;
+            display: block;
+            outline: none;
+            border: 1px solid #eee;
+            box-sizing: border-box;
+            border-radius: 6px;
+            padding-left: 6px;
+            font-size: 1.5rem;
+        }
+        #sex1,#sex2,.ok{
+            margin-right: 1rem;
+            margin-left: 2rem;
+            vertical-align: middle;
+        }
+        label{
+            margin-right: 2rem;
+        }
+        .code{
+            width: 70%;
+            height: 4rem;
+            outline: none;
+            border: 1px solid #eee;
+            box-shadow: 0 0 1px 1px #999;
+            box-sizing: border-box;
+            float: left;
+            border-radius: 10px;
+            padding-left: 6px;
+            font-size: 1.5rem;
+        }
+        .sendCode{
+            width: 24%;
+            height: 4rem;
+            outline: none;
+            border: 1px solid #eee;
+            box-shadow: 0 0 1px 1px #999;
+            box-sizing: border-box;
+            float: right;
+            border-radius: 10px;
+            color: #dd047e;
+            font-size: 12px;
+        }
+        .btn{
+            width: 100%;
+            height: 4rem;
+            margin-top: 2rem;
+            outline: none;
+            border: 1px solid #dd047e;
+            background: transparent;
+            border-radius:4px;
+            color: #dd047e;
+            font-size: 1.5rem;
+        }
+        .layui{
+            width: 16rem;
+            height: 6rem;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 1.4rem;
+            text-align: center;
+            line-height: 6rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -8rem;
+            margin-top: -4rem;
+            display: none;
+
+        }
+        .close{
+            width: 2rem;
+            height: 2rem;
+            color: rgba(0,0,0,0.5);
+            position: fixed;
+            right: 4%;
+            top: 10.1%;
+            font-size: 2rem;
+            text-decoration: none;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2rem;
+            padding: 1rem;
+            background-image: url("../images/close.png");
+            background-repeat: no-repeat;
+            background-size: 50%;
+            background-position: center;
+        }
+        .xieyi{
+            width: 94%;
+            height: 80%;
+            border: 1px solid #000;
+            position: absolute;
+            left:3% ;
+            top: 10%;
+            background: #fff;
+            color: #0C0C0C;
+            overflow: auto;
+            display: none;
+        }
+    </style>
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <script>
+        function fn() {
+            document.documentElement.style.fontSize=document.documentElement.clientWidth*20/640+'px';
+        }
+        document.addEventListener('DOMContextLoaded',fn,false)
+        window.addEventListener('resize',fn);
+        window.addEventListener('orientationchange',fn);
+        window.addEventListener('load',fn);
+
+    </script>
+</head>
+<body>
+    <h2>用户注册</h2>
+    <p><input type="text" placeholder="姓名" class="name"></p>
+    <!--<p><input type="password" placeholder="密码" class="pw1"></p>
+    <p><input type="password" placeholder="再次输入密码确保一致" class="pw2"></p>-->
+    <!--出生日期
+    <p><input type="date" class="date"></p>-->
+    <!--<p>
+        <input type="radio" checked value="男" id="sex1" name="sex"><label for="sex1">男</label>
+        <input type="radio" value="女" id="sex2" name="sex"><label for="sex2">女</label>
+    </p>-->
+    <p><input type="text" placeholder="手机号码" class="phone"></p>
+    <p style="overflow: hidden"><input type="text" class="code" placeholder="输入验证码"><button class="sendCode">发送验证码</button></p>
+    <p><input type="radio" value="ok" class="ok">同意 <a class="openXieyi" href="javascript:;">《协议条款》</a></p>
+    <button class="btn">注册</button>
+
+    <div id="yes" class="layui">
+        注册成功
+    </div>
+    <div id="no" class="layui">
+        注册失败
+    </div>
+    <div id="no1" class="layui">
+        用户名不能为空！
+    </div>
+    <div id="no2" class="layui">
+        请输入正确的手机号！
+    </div>
+    <!--<div id="no4" class="layui">
+        生日不能为空！
+    </div>-->
+    <div id="no3" class="layui">
+        请先仔细阅读协议！
+    </div>
+    <!--<div id="no5" class="layui">
+        密码不能为空！
+    </div>
+    <div id="no6" class="layui">
+        两次密码不一致！
+    </div>-->
+    <div id="no8" class="layui">
+        验证码不能为空！
+    </div>
+    <div id="no7" class="layui">
+        手机号不能为空！
+    </div>
+    <div id="no9" class="layui">
+        手机号已经注册！
+    </div>
+    <div id="no10" class="layui">
+        验证码输入错误！
+    </div>
+    <div id="no11" class="layui">
+        验证码发送成功！
+    </div>
+    <div class="xieyi">
+        <h3 style="text-align: center">个人信息采集说明</h3>
+        <p>根括中华人民共和国相关法律法规，我们很荣幸且有义务提供有关依照中华人民共和国相关法律法规处理个人资料的信息。</p>
+        <p>本隐私政策旨在让您清楚地了解，我们会如何收集及使用您信息，我们保护探的信息的決心，以及您拥有的管理自身信息和隐私的各种选择。</p>
+        <p>本隐私政策适用于“华联羽绒服城”官方微信公众号为您提的各种服务（例如：在线注册会员；参加品牌活动；推送产品和活动信息；发送活动邀请等）。</p>
+        <p>如果您有任何疑问、意见或建议，请按照下文第7条的联系方式与我们联系。</p>
+        <p>本隐私政策将帮助您了解以下内容：</p>
+        <p>1、我们如如何收集和使用您的个人信息</p>
+        <p>2、我们如何共享、转让、公开披露您的个人信息</p>
+        <p>3、我们如何保护您的个人信息</p>
+        <p>4、我们如何处理未成年人的个人信息</p>
+        <p>5、我们如何保存您的个人信息</p>
+        <p>6、本政策如何更新</p>
+        <p>7、如何联系我们</p>
+        <p>请在使用我们的服务前，仔细阅读并了解本《隐私政策》果您选择使用我们的服务，即意味着您完全理解本隐私政策的全部内容，并同意我们根据本隐私政策收集、使用、储存和分享您的个人信息。若您不同意本隐私政策或其任何一部分，请立即停止使用我们的服务。</p>
+        <h5>1、我们如何收集和使用您的个人信息</h5>
+        <p>a）我们向您提供服务所必需的信息</p>
+        <p>—在你注册账户或申请会员时，我们要求您填写手机号码、生日等各项信息；</p>
+        <p>—在您申请“参加品牌活动、推送产品和活动信息、发送活动服务时，我们要求您提供姓名、手机号码、邮寄地址；</p>
+        <p>—在您关注/订阅我们的公众号时，我们会收集您的社交应用账户（如微信号）、昵称、头像等信息；</p>
+        <p>—在您使用我们的移动应用程序时，我们会收集您的移动设备及您同意的其他系统权限（例如位置信息）；</p>
+        <p>—在您与我们的客服人员联系、交流时，我们会收集您的通信息以及您选择提供的任何信息。</p>
+        <p> —其他信息。您还可以选择在填写问卷、进行搜索、更新或添加“华联羽绒服城”账户信息、回答调查、参与优惠活动或使用“华联羽绒服城”官方微信渠道的其他功能时，向我们提供其他信息。</p>
+        <p>—在事先征得明确同意的情况下，我们可收集及处理上述个人资料及下述其他资料。</p>
+
+        <p>b）进行统计分析与特征分析，同样是通过第三方提供的服务。数据处理必须符合中国法律、法规的相关规定，以响应“华联羽绒服城”提交的事先检验请求。</p>
+
+        <p>C）为提供个性化销售服务（通过例如但不限于以下方式：个人购物服务、免费协助服务），（通过信件、电子邮件、短讯和多媒体讯息、社交网络和即时通讯）发送有关独家销售和活动、或“华联羽绒服城”组织或参加的类似活动的消息（包括参加此类活动的潜在邀请），以及用于发送评估提供的服务所达到的満意程度之问卷。除我们向您提供服务所需要的必要信息外，出于b）和C）中所载之目的，我们可收集及处理其他资料。</p>
+        <h5>2、我们如何共享、转让、公开披露您的个人信息</h5>
+        <p>2.a）共享</p>
+        <p>我们不会与任何公司、组织和个人分事你的个人信息，但以下情况及其他您另行明确同意的情况除外：</p>
+        <p>（1)我们可能会根据法律法规规定，或按政府主管部门的强制性要求，对外共享您的个人信息；
+        <p>（2)与我们的关联公司或业务伙伴共享：对于关乎我们的消费者的匿名的、经整合的信息，我们可能与我们的关联公司或我们的业务伙伴分享，例如用于趋势分析；</p>
+        <p>（3)此外，您的个人信息也可由以下公司处理：</p>
+        <p>—为产品目录/产品提供运输服务/送货服务的公司；</p>
+        <p>—由发送新闻部件、营销材料和促销资讯的公司处理；</p>
+        <p>—由负顾客关怀服务的公司处理由负责分析和市场研究的公司处理；</p>
+        <p>—由IT系统维护公司处理；</p>
+        <p>收集的数据也可由独立第三方数据控制方处理，例如：</p>
+        <p>—提供协助或咨询服务（律师、会计师）的个人、公司、协会或专业人员；</p>
+        <p>—管理信用卡支付服务与免税服务的公司。</p>
+        <p>对我们与之共享个人信息的公司、组织和个人，我们会与其签署严格的保密协定，要求他们按照我们的说明以及其他任何相关的保密和安全措施来处理个人信息。</p>
+
+        <p>b)转让</p>
+        <p>我们不会将您的个人信息转让给任何公司、组织和个人，但以下情况除外∶</p>
+        <p>(1)在获取明确同意的情况下转让∶获得您的明确同意后， 我们会向其他方转让您的个人信息;</p>
+        <p>(2）在涉及合并、收购或破产清算时，如涉及到个人信息转让，我们会在要求新的持有您个人信息的公司、组织继续受此隐私声明的约束，否则我们将要求该公司、组织重新向您征求授权同意。</p>
+
+        <p>c)公开披露</p>
+        <p>我们仅会在以下情况下，公开披露您的个人信息：</p>
+        <p>(1）获得您明确同意后;</p>
+        <p>(2）基于法律的披露︰在法律、法律程序、诉讼或政府主管部门强制性要求的情况下，我们可能会公开披露您的个人信息。</p>
+        <h5>3.我们如何保护您的个人信息</h5>
+        <p>a)我们致力于保护您的个人信息。我们采用了恰当的技术措施和组织设置，包括加密，以保护您的个人信息和安全，定岗定责，并定期检查。我们结合了物理和信息技术安全控制措施保护您的个人信息，包括访问控制，从而限制和管理您个人信息和数据的处理、管理，和使用方式。我们同样确保我们的员工得到保护个人信息方面的适当培训。</p>
+        <p>b)您的账户均有安全保护功能，请妥善保管您的账户及密码信息。我们将通过向其它服务器备份、对您密码进行加密等安全措施最大程度确保您的信息不丢失，不被滥用和变造。 尽管有前述安全措施，但同时也请您理解在信息网络上不存在“完善的安全措施”。我们无法承诺您数据及信息的完全安全。</p>
+        <p>c)在不幸发生个人信息安全事件后，我们将按照法律法规的要求，及时向您告知∶安全事件的基本情况和可能的影响、 我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等。我们将及时将事件相关情况 以邮件、信函、电话、推送通知等方式告知您，难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报个人信息安全事件的处置情况。</p>
+        <h5>4.我们如何处理未成年人的个人信息</h5>
+        <p>我们的产品或服务，以及对应的网站，不以未成年人为目标人群。我们不会未经父母或监护人的同意收集未成年人的任何个人信息。</p>
+        <p>如果您是未成年人，但自愿且必须使用我们的产品或服务的，烦请您务必让您的监护人仔细阅读本政策，并在征得您的监护人同意的前提下使用我们的产品或服务，并向我们提供个人信息。</p>
+        <h5>5.我们如何保存您的信息</h5>
+        <p>出于第1段a)款所载之目的而收集的数据将由四川眷禾商业管理有限公司保存，保存期为履行合同所需的期限，且需提供法律保障和传统保障，或遵守有关数据保存的强制性法律条款。</p>
+        <p>为第1段b)款和c)款所载之目的而收集的数据，将保存至客户撤回对我们处理其个人数据的同意为止。</p>
+
+        <h5>6.本政策如何更新</h5>
+        <p>本政策在页首载明的日期更新。</p>
+        <p>当适用的法律政策发生变更，或者我们的产品或服务功能发生重大变化的，我们的隐私政策可能变更。但是，未经您明确同意，我们不会削减您按照本政策所应享有的权利。 对于本政策的重大变更，我们会提供显著的通知（包括会通过电子邮件、站内信等方式发送通知，或者页面弹窗的方式，等等）。</p>
+
+        <h5>7.如何联系我们</h5>
+        <p>如您对本政策的内容，或对我们如何处理您的个人信息，有任何疑问、意见、建议、担忧、投诉或举报，请按照如下方式联系我们∶</p>
+        <p>关注“华联羽绒服城”官方微信公众号，联系在线客服。</p>
+        <p>我们会在15日内响应您的请求，并依据本政策及法律法规处理您的请求。</p>
+        <a href="javascript:;" class="close"></a>
+    </div>
+</body>
+</html>
+<script src="../utils/jquery-3.4.1.min.js"></script>
+<script src="../utils/baseUrl.js"></script>
+<script src="../utils/md5.js"></script>
+<script>
+    var oClose=document.querySelector('.close');
+    var oXieyi=document.querySelector('.xieyi');
+    var openXieyi=document.querySelector('.openXieyi');
+    oClose.onclick=function () {
+        oXieyi.style.display='none';
+    };
+    openXieyi.onclick=function () {
+        oXieyi.style.display='block';
+    };
+
+    $('.btn').click(function () {
+        if($('.name').val().trim()==''){
+            $('#no1').css('display','block');
+            setTimeout(function () {
+                $('#no1').css('display','none');
+            },1000)
+            return false;
+        }
+        /*if($('.pw1').val().trim()==''||$('.pw2').val().trim()==''){
+            $('#no5').css('display','block');
+            setTimeout(function () {
+                $('#no5').css('display','none');
+            },1000)
+            return false;
+        }
+        if($('.pw1').val()!=$('.pw2').val()){
+            $('#no6').css('display','block');
+            setTimeout(function () {
+                $('#no6').css('display','none');
+            },1000)
+            return false;
+        }*/
+        /*if($('.date').val().trim()==''){
+            $('#no4').css('display','block');
+            setTimeout(function () {
+                $('#no4').css('display','none');
+            },1000)
+            return false;
+        }*/
+
+        if($('.phone').val().trim()==''||/^1[3-9]\d{9}$/.test($('.phone').val())==false){
+            $('#no2').css('display','block');
+            setTimeout(function () {
+                $('#no2').css('display','none');
+            },1000)
+            return false;
+        }
+        if($('.ok:checked').val()!='ok'){
+            $('#no3').css('display','block');
+            setTimeout(function () {
+                $('#no3').css('display','none');
+            },1000)
+            return false;
+        }
+        if($('.code').val().trim()==''){
+            $('#no8').css('display','block');
+            setTimeout(function () {
+                $('#no8').css('display','none');
+            },1000)
+            return false;
+        }
+        $.ajax({
+            url:baseUrl+'/user/reg?name='+$('.name').val()+'&phone='+$('.phone').val()+'&captcha='+$('.code').val(),
+            type:'post',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            /*data:JSON.stringify({
+                "name":$('.name').val(),
+                "phone":$('.phone').val(),
+                /!*"sex":$('[name=sex]:checked').val(),*!/
+                /!*"birthday":$('.date').val(),*!/
+                /!*"pwd":$.md5($('.pw1').val()).toUpperCase(),*!/
+                "captcha":$('.code').val()
+            }),*/
+            success:function (res) {
+                console.log(res);
+                if(res.code==1){
+                    $('#yes').css('display','block');
+                    setTimeout(function () {
+                        $('#yes').css('display','none');
+                        window.location.href='./userLogin.html?r='+Math.random();
+                    },1000)
+                }else{
+                    $('#no10').css('display','block');
+                    setTimeout(function () {
+                        $('#no10').css('display','none');
+                    },1000)
+                    return false;
+                }
+            }
+        })
+    })
+
+    $('.sendCode').click(function () {
+        if($('.phone').val().trim()==''){
+            $('#no7').css('display','block');
+            setTimeout(function () {
+                $('#no7').css('display','none');
+            },1000)
+            return false;
+        }
+
+        $.ajax({
+            url:baseUrl+'/captcha/send?phone='+$('.phone').val(),
+            type:'post',
+            success:function (res) {
+                console.log(res);
+                if(res.code==1){
+                    function clock(){
+                        n--;
+                        $('.sendCode').html(n+'秒后重新发送');
+                        if(n==0){
+                            $('.sendCode').html('重新发送');
+                            $('.sendCode')[0].disabled=false;
+                            clearInterval(timer);
+                        }
+                    }
+
+                    $('#no11').css('display','block');
+                    $('.sendCode')[0].disabled=true;
+                    clock();
+                    var n=60;
+                    var timer=setInterval(clock,1000);
+                    setTimeout(function () {
+                        $('#no11').css('display','none');
+                    },1000);
+                    return false;
+                }else{
+                    $('#no9').css('display','block');
+                    setTimeout(function () {
+                        $('#no9').css('display','none');
+                    },1000)
+                    return false;
+                }
+            }
+
+        })
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

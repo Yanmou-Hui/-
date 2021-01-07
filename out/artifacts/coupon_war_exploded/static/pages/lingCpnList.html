@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>华联</title>
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            font-size: 20px;
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            background: #45177d;
+        }
+        h2{
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            width: 100%;
+            height: 3rem;
+            color: #dd047e;
+            margin-bottom: 2rem;
+        }
+        h2 span{
+            font-size: 2rem;
+            color: #eee;
+        }
+        h3{
+            font-size: 1rem;
+            color: #dd047e;
+        }
+        .btn{
+            width: 100%;
+            height: 4rem;
+            margin-top: 2rem;
+            outline: none;
+            border: 1px solid #eee;
+            box-shadow: 0 0 1px 1px #999;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+        }
+        #cpnBox,#cpnBox2,#cpnBox3{
+            width: 100%;
+            padding: 0 2rem;
+            overflow: auto;
+        }
+        .list{
+            width: 28rem;
+            margin-bottom: 1.6rem;
+            height: 8rem;
+            position: relative;
+        }
+        .bg{
+            width: 100%;
+            height: 8rem;
+        }
+        .tit{
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: rgba(0,0,0,0.6);
+            width: 100%;
+            height: 8rem;
+
+        }
+        .tit img{
+            width: 8rem;
+            height: 8rem;
+        }
+        #box{
+            width: 32rem;
+            height: 80%;
+            position: fixed;
+            background: #fff;
+            left: 0;
+            top: 15%;
+            display: none;
+            border-radius: 10px;
+        }
+        #box2{
+            width: 32rem;
+            height: 80%;
+            position: fixed;
+            background: #fff;
+            left: 0;
+            top: 15%;
+            display: none;
+            border-radius: 10px;
+        }
+        #box3{
+            width: 32rem;
+            height: 80%;
+            position: fixed;
+            background: #fff;
+            left: 0;
+            top: 15%;
+            display: none;
+            border-radius: 10px;
+        }
+        .con{
+            width: 26rem;
+            height: calc(100% - 8rem);
+            border: 2px solid #45177d;
+            margin: 3rem 0 0 3rem;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        .role{
+            height: 11rem;
+            overflow: scroll;
+        }
+        .close{
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            color: #fff;
+            width: 3rem;
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.4);
+            text-decoration: none;
+            background-image: url("../images/close.png");
+            background-repeat: no-repeat;
+            background-size: 50%;
+            background-position: center;
+        }
+        h3{
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            color: #45177d;
+        }
+
+        h3 span{
+            font-size:1rem ;
+            color: #45177d;
+        }
+        .con>p{
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #45177d;
+            font-weight: bold;
+        }
+        .con p:nth-child(2){
+            font-weight: bold;
+        }
+        .con p span{
+            color: #45177d;
+            padding-left: 3rem;
+        }
+        .ok{
+            width: 10rem;
+            height: 4rem;
+            background: rgba(255,255,255,0.5);
+            border: 0;
+            box-shadow: 0 0 1px 1px #eee;
+            outline: none;
+            margin-top: 4rem;
+        }
+        .no{
+            width: 10rem;
+            height: 4rem;
+            background: rgba(0,0,0,0.5);
+            border: 0;
+            box-shadow: 0 0 1px 1px #eee;
+            outline: none;
+            margin-left: 3rem;
+        }
+        .layui{
+            width: 16rem;
+            height: 8rem;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            font-size: 1.6rem;
+            text-align: center;
+            line-height: 8rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -8rem;
+            margin-top: -4rem;
+            display: none;
+        }
+        #shenqing2{
+            width: 100%;
+            height: 4rem;
+            margin-top: 2rem;
+            outline: none;
+            border: 1px solid #45177d;
+            background:#999;
+            color: #45177d;
+            border-radius: 10px;
+        }
+        #shenqing{
+            width: 100%;
+            height: 4rem;
+
+            margin-top: 2rem;
+            outline: none;
+            border: 1px solid #45177d;
+            background:transparent;
+            color: #fff;
+            border-radius: 10px;
+            background: #45177d;
+        }
+        hr{
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .con .zhuyi{
+            color: #000;
+        }
+        .con .guoqi{
+            color: #000;
+        }
+    </style>
+    <script>
+        function fn() {
+            document.documentElement.style.fontSize=document.documentElement.clientWidth*20/640+'px';
+        }
+        document.addEventListener('DOMContextLoaded',fn,false)
+        window.addEventListener('resize',fn);
+        window.addEventListener('orientationchange',fn);
+        window.addEventListener('load',fn);
+
+    </script>
+</head>
+<body>
+    <h2>领取优惠券 <span></span></h2>
+    <h3 class="h1">可领取</h3>
+    <div id="cpnBox">
+        <!--<div class="list">-->
+            <!--<img class="bg" src="../images/imgbg.png" alt="">-->
+        <!--</div>-->
+        <!--<div class="list">-->
+            <!--<img class="bg" src="../images/imgbg.png" alt="">-->
+            <!--<div class="tit">-->
+                <!--<img src="../images/shixiao.png" alt="">-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+    <h3 class="h2">已领取</h3>
+    <div id="cpnBox2">
+        <!--<div class="list">-->
+            <!--<img class="bg" src="../images/imgbg.png" alt="">-->
+        <!--</div>-->
+        <!--<div class="list">-->
+            <!--<img class="bg" src="../images/imgbg.png" alt="">-->
+            <!--<div class="tit">-->
+                <!--<img src="../images/shixiao.png" alt="">-->
+            <!--</div>-->
+        </div>
+    </div>
+    <!--已失效-->
+    <div id="cpnBox3">
+
+    </div>
+    <div id="box">
+        <a href="JavaScript:;" class="close"></a>
+        <div class="con" data-id="">
+            <h3>优惠券详情</h3>
+            <p>
+                基本规则:
+                <span class="zhuyi">
+                    使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则
+                </span>
+            </p>
+            <p>
+                领取截至:
+                <span class="guoqi">
+
+                </span>
+            </p>
+            <p>
+                使用截至:
+                <span class="shixiao">
+
+                </span>
+            </p>
+            <hr>
+            <p style="font-weight: bold">详细规则</p>
+            <div  class="role">
+                注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项
+            </div>
+            <button id="shenqing">申请</button>
+        </div>
+    </div>
+    <div id="box2">
+        <a href="JavaScript:;" class="close"></a>
+        <div class="con" data-id="">
+            <h3>优惠券详情</h3>
+            <p>基本规则</p>
+            <div class="zhuyi">
+                使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则
+            </div>
+            <hr>
+            <p>详细规则</p>
+            <div  class="role">
+                注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项
+            </div>
+        </div>
+    </div>
+    <div id="box3">
+        <a href="JavaScript:;" class="close"></a>
+        <div class="con" data-id="">
+            <h3>优惠券详情</h3>
+            <p>基本规则</p>
+            <div class="zhuyi">
+                使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则使用规则
+            </div>
+            <hr>
+            <p>详细规则</p>
+            <div  class="role">
+                注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项
+            </div>
+        </div>
+    </div>
+
+    <div id="no" class="layui">
+        领取失败！
+    </div>
+    <div id="yes" class="layui">
+        领取成功！
+    </div>
+</body>
+</html>
+<script src="../utils/zepto.min.js"></script>
+<script src="../utils/baseUrl.js"></script>
+<script>
+    if(!window.localStorage.getItem('wzname')){
+        window.location.href='./userLogin.html?go=get&t='+Math.random();
+    }
+
+    var id;
+
+    var phone=window.localStorage.getItem('wzphone');
+    $('h2 span').html(phone);
+
+    function get(){
+        $.ajax({
+            url:baseUrl+'/user/getCpnListForWeb?phone='+phone,
+            type:'post',
+            success:function (res) {
+                res.data = res;
+                console.log(res);
+                $('#cpnBox').html('');
+                $('#cpnBox2').html('');
+                $('#cpnBox3').html('');
+
+                for(var i=0;i<res.data.userNotGetCpnList.length;i++){
+                    $('#cpnBox').append(`
+                        <div class="list"
+                            data-id="${res.data.userNotGetCpnList[i].id}"
+                            data-name="${res.data.userNotGetCpnList[i].name}"
+                            data-collectExpire="${res.data.userNotGetCpnList[i].collectExpire}"
+                            data-desc="${res.data.userNotGetCpnList[i].desc}"
+                            data-useExpire="${res.data.userNotGetCpnList[i].useExpire}"
+                        >
+                            <div class="role" style="display: none">${res.data.userNotGetCpnList[i].role}</div>
+                            <img class="bg" src="${baseUrl+'/static/images/'+res.data.userNotGetCpnList[i].img}" alt="">
+                        </div>
+                    `)
+                }
+                for(var j=0;j<res.data.userGetCpnList.length;j++){
+                    $('#cpnBox2').append(`<div class="list"
+                            data-id="${res.data.userGetCpnList[j].id}"
+                            data-name="${res.data.userGetCpnList[j].name}"
+                            data-collectExpire="${res.data.userGetCpnList[j].collectExpire}"
+                            data-desc="${res.data.userGetCpnList[j].desc}"
+                            data-useExpire="${res.data.userGetCpnList[j].useExpire}"
+
+        >
+                            <div class="role" style="display: none">${res.data.userGetCpnList[j].role}</div>
+                            <img class="bg" src="${baseUrl+'/static/images/'+res.data.userGetCpnList[j].img}" alt="">
+                            <div class="tit">
+                                <img src="../images/lingqu.png" alt="">
+                            </div>
+                        </div>`)
+                }
+                for(var k=0;k<res.data.overExpire.length;k++){
+                    $('#cpnBox3').append(`<div class="list"
+                            data-id="${res.data.overExpire[k].id}"
+                            data-name="${res.data.overExpire[k].name}"
+                            data-collectExpire="${res.data.overExpire[k].collectExpire}"
+                            data-desc="${res.data.overExpire[k].desc}"
+                            data-useExpire="${res.data.overExpire[k].useExpire}"
+
+        >
+                            <div class="role" style="display: none">${res.data.overExpire[k].role}</div>
+                            <img class="bg" src="${baseUrl+'/static/images/'+res.data.overExpire[k].img}" alt="">
+                            <div class="tit">
+                                <img src="../images/shixiao.png" alt="">
+                            </div>
+                        </div>`)
+                }
+            }
+        })
+    }
+    get();
+
+    $('#cpnBox').on('click','.list',function (ev) {
+        $('#box').css('display','block');
+        id=$(ev.currentTarget).attr('data-id');
+        $('#box .role').html($(ev.currentTarget).find('.role').html());
+        $('#box .zhuyi').html($(ev.currentTarget).attr('data-desc'))
+        $('#box .guoqi').html($(ev.currentTarget).attr('data-collectExpire'))
+        $('#box .shixiao').html($(ev.currentTarget).attr('data-useExpire'))
+    });
+    $('#cpnBox2').on('click','.list',function (ev) {
+
+        $('#box2').css('display','block');
+        $('#box2 .con').attr('data-id',$(ev.target).attr('data-id'));
+        $('#box2 .role').html($(ev.currentTarget).find('.role').html());
+        $('#box2 .zhuyi').html($(ev.currentTarget).attr('data-desc'))
+        $('#box .guoqi').html($(ev.currentTarget).attr('data-collectExpire'))
+        $('#box .shixiao').html($(ev.currentTarget).attr('data-useExpire'))
+    });
+    
+    $('#shenqing').click(function (ev) {
+        $.ajax({
+            url:baseUrl+'/user/getCpn?cpId='+id+'&phone='+phone,
+            type:'post',
+            success:function (res) {
+                if(res.code==1){
+                    $('#yes').css('display','block')
+                    setTimeout(function () {
+                        $('#yes').css('display','none');
+                        $('#box').css('display','none');
+                        get();
+                    },700)
+                }
+            }
+        })
+    })
+    $('.close').click(function (ev) {
+        $(ev.currentTarget).parent().css('display','none');
+    })
+</script>
+
+
+
+
+
+

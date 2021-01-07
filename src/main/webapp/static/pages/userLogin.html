@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>华联</title>
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            font-size: 20px;
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            background: #45177d;
+            overflow: hidden;
+            text-align: center;
+            padding: 2rem;
+        }
+        h2{
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            width: 100%;
+            height: 3rem;
+            color: #dd047e;
+        }
+        .phone,.pw{
+            width: 100%;
+            height: 4rem;
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            display: block;
+            outline: none;
+            border: 1px solid #eee;
+            box-shadow: 0 0 1px 1px #999;
+            box-sizing: border-box;
+            border-radius:4px;
+            padding-left: 6px;
+        }
+        .btn{
+            width: 100%;
+            height: 4rem;
+            margin-top: 2rem;
+            outline: none;
+            border: 2px solid #dd047e;
+            background: transparent;
+            border-radius:4px;
+            color: #dd047e;
+             font-size: 1.5rem;
+        }
+        .layui{
+            width: 16rem;
+            height: 6rem;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 1.4rem;
+            text-align: center;
+            line-height: 6rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -8rem;
+            margin-top: -4rem;
+            display: none;
+
+        }
+        .register{
+            float: right;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-right: 2rem;
+        }
+        .register:link{
+            color: #fff;
+        }
+        .logo{
+            margin-top: 2rem;
+            width: 5rem;
+        }
+    </style>
+    <script>
+        function fn() {
+            document.documentElement.style.fontSize=document.documentElement.clientWidth*20/640+'px';
+        }
+        document.addEventListener('DOMContextLoaded',fn,false)
+        window.addEventListener('resize',fn);
+        window.addEventListener('orientationchange',fn);
+        window.addEventListener('load',fn);
+
+    </script>
+</head>
+<body>
+    <img class="logo" src="../images/logo.png" alt="">
+    <h2>用户登录</h2>
+    <input type="text" class="phone" placeholder="请输入手机号">
+    <!--<input type="password" class="pw" placeholder="请输入密码">-->
+    <button class="btn">登录</button>
+    <a href="./register.html" class="register">注册</a>
+    <div id="no" class="layui">
+        请输入正确的手机号码！
+    </div>
+    <!--<div id="no2" class="layui">
+        手机号和密码不匹配！
+    </div>-->
+    <div id="yes" class="layui">
+        登录成功
+    </div>
+</body>
+</html>
+<script src="../utils/jquery-3.4.1.min.js"></script>
+<script src="../utils/baseUrl.js"></script>
+<script src="../utils/md5.js"></script>
+<script>
+    if(window.localStorage.getItem('wzname')){
+        //有账号
+        // login(window.localStorage.getItem('wzphone'));
+    }
+
+    function login(phone,pw){
+        $.ajax({
+            type:'post',
+            url:baseUrl+'/user/login?phone='+phone,
+            success:function (res) {
+                if(res.code==0){
+                    $('#no').css('display','block')
+                    setTimeout(function () {
+                        $('#no').css('display','none')
+                    },700);
+                }else{
+                    $('#yes').css('display','block')
+                    setTimeout(function () {
+                        $('#yes').css('display','none');
+                        res = res.data;
+                        window.localStorage.setItem('wzname',res.name);
+                        /*window.localStorage.setItem('wzpw',pw);*/
+                        window.localStorage.setItem('wzphone',res.phone);
+                        window.localStorage.setItem('wzregTime',res.regTime);
+                        window.localStorage.setItem('wzsex',res.sex);
+                        if(window.location.search.substring(1).split('=')[1]=='get'){
+                            window.location.href='./lingCpnList.html?t='+Math.random();
+                        }else{
+                            window.location.href='./userMsg.html?t='+Math.random();
+                        }
+                    },700)
+                }
+            }
+        })
+
+    }
+
+    $('.btn').click(function () {
+        if($('.phone').val().trim()==''){
+            $('#no').css('display','block')
+            setTimeout(function () {
+                $('#no').css('display','none')
+            },700)
+            return false;
+        }
+        /*if($('.pw').val().trim()==''){
+            $('#no2').css('display','block')
+            setTimeout(function () {
+                $('#no2').css('display','none')
+            },700)
+            return false;
+        }*/
+        login($('.phone').val().trim());
+
+
+    })
+</script>
+
+
+
+
+
+
+

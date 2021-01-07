@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--声明Mapper的命名空间: 和接口呼应,区分不同的mapper-->
+<mapper namespace="com.cdcas.coupon.mapper.CouponMapper">
+
+    <!--给数据库中的字段和User类中的字段进行映射配置即可-->
+    <resultMap id="couponMap" type="Coupon">
+        <id column="cp_id" property="id" javaType="java.lang.Integer"/>
+        <result column="cp_name" property="name" javaType="java.lang.String"/>
+        <result column="cp_desc" property="desc" javaType="java.lang.String"/>
+        <result column="cp_img" property="img" javaType="java.lang.String"/>
+        <result column="cp_role" property="role" javaType="java.lang.String"/>
+        <result column="cp_collectExpire" property="collectExpire" javaType="java.util.Date"/>
+        <result column="cp_useExpire" property="useExpire" javaType="java.util.Date"/>
+        <result column="cp_inUse" property="inUse" javaType="java.lang.Boolean"/>
+    </resultMap>
+
+    <insert id="add" parameterType="Coupon">
+        INSERT INTO tb_coupon
+        VALUES (NULL, #{name}, #{desc}, #{img}, #{role}, #{collectExpire}, #{useExpire}, FALSE)
+    </insert>
+
+    <select id="selectByPage" parameterType="integer" resultMap="couponMap">
+        SELECT *
+        FROM tb_coupon
+        ORDER BY cp_inUse DESC, cp_useExpire ASC
+        LIMIT #{param1},10
+    </select>
+
+    <!-- 所有可领取的 - 已经领取的 = 未领取的 -->
+    <select id="selectByInUse" parameterType="object" resultMap="couponMap">
+        SELECT *
+        FROM tb_coupon
+        WHERE cp_inUse = TRUE
+          AND cp_id NOT IN (SELECT get_cp_id FROM tb_get WHERE get_user_phone=#{param1})
+    </select>
+
+    <!-- 已经领取的 并且 还没使用-->
+    <!--
+        @param1：isUsed：TRUE（已使用）/FALSE（未使用）
+        @param2：phone
+        @param3：date
+        @return : Coupon
+        1、tb_get中查询出已经领取的 并且isUse=FALSE 并且没失效的 的所有优惠券的id
+        2、在tb_coupon中查询出第一步中找到的id
+    -->
+    <select id="selectHasGetNotUsed" parameterType="object" resultMap="couponMap">
+        SELECT *
+        FROM tb_coupon
+                 JOIN tb_get ON tb_coupon.cp_id = tb_get.get_cp_id
+        WHERE get_idUsed = #{param1}
+          AND get_user_phone = #{param2}
+          AND  <![CDATA[ cp_useExpire > str_to_date(#{param3}, '%Y-%m-%d %H:%i:%s')]]>
+    </select>
+
+    <!-- 已经领取的 并且 使用了/过期了-->
+    <!--
+        @param1：isUsed：TRUE（已使用）/FALSE（未使用）
+        @param2：phone
+        @param3：date
+        @return : Coupon
+        1、tb_get中查询出已经领取的 并且isUse=FALSE 并且没失效的 的所有优惠券的id
+        2、在tb_coupon中查询出第一步中找到的id
+    -->
+    <select id="selectHasGetHasUsed" parameterType="object" resultMap="couponMap">
+        SELECT *
+        FROM tb_get
+                 LEFT JOIN tb_coupon ON tb_coupon.cp_id = tb_get.get_cp_id
+        WHERE get_user_phone = #{param2}
+          AND (get_idUsed = #{param1} OR  <![CDATA[ cp_useExpire <= str_to_date(#{param3}, '%Y-%m-%d %H:%i:%s') ]]>)
+    </select>
+
+
+    <update id="update" parameterType="object">
+        UPDATE tb_coupon
+        SET cp_inUse = #{param2}
+        WHERE cp_id = #{param1}
+    </update>
+
+    <select id="getAll" resultMap="couponMap">
+        SELECT *
+        FROM tb_coupon;
+    </select>
+
+    <insert id="acquire" parameterType="Get">
+        INSERT INTO tb_get
+        VALUES (NULL, #{cpId}, #{phone}, #{time}, 0, NULL)
+    </insert>
+
+</mapper>

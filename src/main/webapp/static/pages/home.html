@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../utils/layui/css/layui.css">
+    <link rel="stylesheet" href="../style/home.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">华联后台管理系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <!--<ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>-->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;" class="userName">
+
+                </a>
+            </li>
+            <li class="layui-nav-item"><a class="exit" href="javascript:;"><i style="color: red; font-size: 20px" class="layui-icon layui-icon-logout"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-shrink="all"  lay-filter="test">
+                <li class="layui-nav-item  layui-nav-itemed">
+                    <a class="" href="javascript:;">会员管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a style="color: #fff" href="home.html">会员列表</a></dd>
+                        <dd><a href="membershipCoupon.html">会员优惠券</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;">优惠券管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="coupon.html">优惠券列表</a></dd>
+                        <dd><a href="exchange.html">优惠券兑换清单</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="clerk.html">核销人员管理</a></li>
+                <!--<li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">用户账号管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="javascript:;">列表三</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">列表一</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>-->
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div class="layui-inline searchBox">
+                <div class="layui-input-inline">
+                    <label class="layui-form-label">会员搜索</label>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" placeholder="昵称/手机号码"  class="layui-input searchInp">
+                </div>
+                <div class="layui-input-inline">
+                    <button type="button" class="layui-btn layui-btn-normal searchBtn">搜索</button>
+                </div>
+                <button type="button" class="layui-btn daochu">导出</button>
+            </div>
+            <div>
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col width="200">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>昵称</th>
+                            <th>手机号</th>
+                            <th>会员注册时间</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tab">
+
+                    </tbody>
+                </table>
+            </div>
+            <div id="page">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+</body>
+</html>
+<script src="../utils/jquery-3.4.1.min.js"> </script>
+<script src="../utils/layui/layui.js"></script>
+<script src="../utils/baseUrl.js"></script>
+
+<script>
+    $('.userName').html(window.localStorage.getItem('user'));
+    $('.exit').click(function () {
+        window.localStorage.removeItem('user');
+        window.localStorage.removeItem('auth');
+        window.location.href='../index.html';
+    });
+
+
+    var page=1;
+    var count;
+
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+    var laypage;
+    layui.use('laypage', function(){
+        laypage = layui.laypage;
+    });
+    var layer;
+    layui.use('layer', function(){
+        layer = layui.layer;
+    });
+
+    /*获取数据*/
+    function getCon(){
+        /*if(!window.localStorage.getItem('auth')){
+            window.location.href='/';
+            return false;
+        }*/
+        $.ajax({
+            method:'post',
+            headers:{
+                'content-type':'application/json',
+                'auth':window.localStorage.getItem('auth')
+            },
+            url:baseUrl+'/user/getList?name='+$('.searchInp').val()+'&page='+page,
+            /*data:{
+                name:$('.searchInp').val(),
+                page:page
+            },*/
+            success:function (res) {
+                console.log(res);
+                if(res.code==1){
+                    console.log(res);
+                    count=res.count;
+                    $('.tab').html('');
+                    for(var i=0;i<res.data.length;i++){
+
+                        $('.tab').append(`
+                            <tr>
+                                <td>${res.data[i].id}</td>
+                                <td>${res.data[i].name}</td>
+                                <td>${res.data[i].phone}</td>
+                                <td>${res.data[i].regTime}</td>
+                            </tr>
+                        `)
+                    }
+
+                    if(count>=10){
+                        $('#page').css('display','block');
+                        laypage.render({
+                            elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
+                            ,count:count //数据总数，从服务端得到
+                            ,curr:page
+                            ,jump:function (obj,first) {
+                                console.log('first',first)
+                                if(!first){
+                                    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                                    console.log(obj.limit); //得到每页显示的条数
+                                    page=obj.curr;
+                                    getCon();
+                                }
+                            }
+                        });
+                    }else{
+                        $('#page').css('display','none');
+                    }
+                }else if(res.code==500){
+                    layer.msg('登录信息已经过期');
+                    setTimeout(function () {
+                        window.location.href='/';
+                    },1000)
+                }
+            }
+        });
+    }
+
+    /*页面加载后加载数据*/
+    $(function () {
+        getCon();
+    });
+    /*点击搜索的时候*/
+    $('.searchBtn').click(function () {
+        page=1;
+        getCon();
+        $('.searchInp').val('');
+    })
+
+
+    $('.daochu').click(function () {
+        /*var sheet =XLSX.utils.table_to_sheet($('table')[0]);
+        openDownloadDialog(sheet2blob(sheet), '会员信息表.xlsx');*/
+
+        let a = document.createElement('a');
+        let _fileName = '会员信息表.xls';
+        a.download = _fileName;
+        a.href = baseUrl+'/user/exportList';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+    })
+</script>

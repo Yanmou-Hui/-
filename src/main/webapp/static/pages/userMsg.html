@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>华联</title>
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            font-size: 20px;
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            background: #45177d;
+            overflow: hidden;
+            text-align: center;
+            color: #dd047e;
+        }
+        h2{
+            font-size: 1.8rem;
+
+            margin-top: 5rem;
+            width: 100%;
+            height: 3rem;
+        }
+        img{
+            width: 10rem;
+            height: 10rem;
+            margin-top: 1rem;
+        }
+        p{
+            font-size: 1.5rem;
+            line-height: 3rem;
+        }
+        div p{
+            font-weight: bold;
+            line-height: 3rem;
+            font-size: 1.7rem;
+        }
+        button{
+            margin-top: 14rem;
+            text-align: center;
+            line-height: 4rem;
+            width: 22rem;
+            height: 4rem;
+            background: transparent;
+            border: 1px solid #dd047e;
+            color: #dd047e;
+        }
+        div{
+            margin-top: 4rem;
+        }
+
+        div.context{
+            width:100%;
+            height:50%;
+            margin: 4rem auto;
+        }
+        div.context h2{
+            margin-top: 30%;
+        }
+        div.bottom{
+            width: 100%;
+            height:30%;
+            background-image: url("../images/wow.png");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: absolute;
+            bottom: -5rem;
+            left:1rem;
+        }
+    </style>
+    <script>
+        function fn() {
+            document.documentElement.style.fontSize=document.documentElement.clientWidth*20/640+'px';
+        }
+        document.addEventListener('DOMContextLoaded',fn,false)
+        window.addEventListener('resize',fn);
+        window.addEventListener('orientationchange',fn);
+        window.addEventListener('load',fn);
+
+    </script>
+</head>
+<body>
+    <div class="context">
+        <h2>用户信息</h2>
+    <!--<img src="../images/nan.png" alt="">-->
+        <p class="name">姓名</p>
+        <p class="phone">13888888888</p>
+        <div>
+            <p class="date">2020年10月10日</p>
+            <p>加入华联大家庭</p>
+        </div>
+    </div>
+    
+    <!-- <button>返回</button> -->
+    <div class="bottom"></div>
+</body>
+</html>
+<script src="../utils/zepto.min.js"></script>
+<script>
+    if(!window.localStorage.getItem('wzname')){
+        window.location.href='./userLogin.html?go=my&t='+Math.random();
+    }
+
+    /*if(window.localStorage.getItem('wzsex')=='女'){
+        $('img').attr('src','../images/nv.png')
+    }*/
+
+    $('.name').html(window.localStorage.getItem('wzname'))
+    $('.phone').html(window.localStorage.getItem('wzphone'))
+    $('.date').html(window.localStorage.getItem('wzregTime'))
+</script>
+
+
+
+
+
+
+
